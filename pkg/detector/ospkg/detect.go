@@ -19,6 +19,7 @@ import (
 	"github.com/aquasecurity/trivy/pkg/detector/ospkg/suse"
 	"github.com/aquasecurity/trivy/pkg/detector/ospkg/ubuntu"
 	"github.com/aquasecurity/trivy/pkg/detector/ospkg/wolfi"
+	"github.com/aquasecurity/trivy/pkg/detector/ospkg/wrlinux"
 	ftypes "github.com/aquasecurity/trivy/pkg/fanal/types"
 	"github.com/aquasecurity/trivy/pkg/log"
 	"github.com/aquasecurity/trivy/pkg/types"
@@ -44,6 +45,7 @@ var (
 		ftypes.Photon:       photon.NewScanner(),
 		ftypes.Wolfi:        wolfi.NewScanner(),
 		ftypes.Chainguard:   chainguard.NewScanner(),
+		ftypes.WRLinux:      wrlinux.NewScanner(),
 	}
 )
 
