@@ -63,6 +63,9 @@ const (
 
 	// Chainguard is done
 	Chainguard = "chainguard"
+
+	// WRLinux is done
+	WRLinux = "wrlinux"
 )
 
 var AnalyzeOSError = xerrors.New("unable to analyze OS information")
