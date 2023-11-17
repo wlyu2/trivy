@@ -39,6 +39,7 @@ const (
 	SLES               OSType = "suse linux enterprise server"
 	Ubuntu             OSType = "ubuntu"
 	Wolfi              OSType = "wolfi"
+	WRLinux            OSType = "wrlinux"
 )
 
 // Programming language dependencies

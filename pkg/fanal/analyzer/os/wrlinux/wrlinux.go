@@ -17,7 +17,7 @@ import (
 	"golang.org/x/xerrors"
 
 	"github.com/aquasecurity/trivy/pkg/fanal/analyzer"
-	aos "github.com/aquasecurity/trivy/pkg/fanal/analyzer/os"
+	fos "github.com/aquasecurity/trivy/pkg/fanal/analyzer/os"
 	"github.com/aquasecurity/trivy/pkg/fanal/types"
 	"github.com/aquasecurity/trivy/pkg/fanal/utils"
 )
@@ -35,25 +35,25 @@ var requiredFiles = []string{
 type wrlinuxOSAnalyzer struct{}
 
 func (a wrlinuxOSAnalyzer) Analyze(_ context.Context, input analyzer.AnalysisInput) (*analyzer.AnalysisResult, error) {
-	wrlinuxName := ""
+	isWrlinux := false
 	scanner := bufio.NewScanner(input.Content)
 	for scanner.Scan() {
 		line := scanner.Text()
 		if strings.HasPrefix(line, "NAME=\"Wind River Linux") {
-			wrlinuxName = aos.WRLinux
+			isWrlinux = true
 			continue
 		}
 
-		if wrlinuxName != "" && strings.HasPrefix(line, "VERSION_ID=") {
+		if isWrlinux && strings.HasPrefix(line, "VERSION_ID=") {
 			return &analyzer.AnalysisResult{
 				OS: types.OS{
-					Family: wrlinuxName,
+					Family: types.WRLinux,
 					Name:   strings.TrimSpace(line[11:]),
 				},
 			}, nil
 		}
 	}
-	return nil, xerrors.Errorf("wrlinux: %w", aos.AnalyzeOSError)
+	return nil, xerrors.Errorf("wrlinux: %w", fos.AnalyzeOSError)
 }
 
 func (a wrlinuxOSAnalyzer) Required(filePath string, _ os.FileInfo) bool {
